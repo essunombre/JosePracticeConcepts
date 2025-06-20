@@ -1,52 +1,63 @@
 import math
 
 def main():
-  # print('#1 Picnic')
-  # can_radious = 6.83
-  # can_height = 10.16
-  # can_volume = compute_volume(can_radious, can_height)
-  # can_surface = compute_surface_area(can_radious, can_height)
-  # storage_efficiency = compute_storage_efficiency(can_volume, can_surface)
-  # print(f'The can has Radius: {can_radious} - Height: {can_height} - Volume: {can_volume:.2f}')
-  # print(f'Surface: {can_surface:.2f} - Storage Efficiency: {storage_efficiency:.2f}')
-  can_efficiency('#1 Picnic', 6.83, 10.16)
-  can_efficiency('#1 Tall', 7.78, 11.91)
-  can_efficiency('#2', 8.73, 11.59)
-  can_efficiency('#2.5', 10.32, 11.91)
-  can_efficiency('#3 Cylinder', 10.79, 17.78)
-  can_efficiency('#5', 13.02, 14.29)
-  can_efficiency('#6Z', 5.40,8.89)
-  can_efficiency('#8Z short', 6.83, 7.62)
-  can_efficiency('#10', 15.72, 17.78)
-  can_efficiency('#211', 6.83, 12.38)
-  can_efficiency('#300', 7.62, 11.27)
-  can_efficiency('#303', 8.10, 11.11)
-        
-def can_efficiency(name, radious, height):
-  can_volume = compute_volume(radious, height)
-  can_surface = compute_surface_area(radious, height)
-  storage_efficiency = compute_storage_efficiency(can_volume, can_surface)
-  print(f'-----------------------{name}-----------------------')
-  print(f'The can has Radius: {radious} - Height: {height} - Volume: {can_volume:.2f}')
-  print(f'Surface: {can_surface:.2f} - Storage Efficiency: {storage_efficiency:.2f}')
-  print('--------------------------------------------------------------')
   
-def compute_volume(radious, height):
-  """Calculates the volume by using
-  the radious and the height"""
-  volume = math.pi * radious **2 * height
-  return volume
+  # Here there are declared 4 lists for the cans info.
+  can_names = [
+    "#1 Picnic", "#1 Tall", "#2", "#2.5", "#3 Cylinder", "#5",
+        "#6Z", "#8Z short", "#10", "#211", "#300", "#303"
+  ]
+  can_radiouses = [
+    6.83, 7.78, 8.73, 10.32, 10.79, 13.02,
+        5.4, 6.83, 15.72, 6.83, 7.62, 8.1
+  ]
+  can_heights = [
+    10.16, 11.91, 11.59, 11.91, 17.78, 14.29,
+        8.89, 7.62, 17.78, 12.38, 11.27, 11.11
+  ]
+  can_costs = [
+    0.28, 0.43, 0.45, 0.61, 0.86, 0.83,
+        0.22, 0.26, 1.53, 0.34, 0.38, 0.42
+  ]
+  best_store = None
+  best_cost = None
+  max_store_eff = -1
+  max_cost_eff = -1
 
-def compute_surface_area(radious, height):
-  """Calculates the surface area using
-  the volume and height"""
-  surface_area = 2 * math.pi * radious * (radious + height)
-  return surface_area 
-  
-def compute_storage_efficiency(volume, surface_area):
-  """Calculates the storage efficiency 
-  using the volume and and surface"""
-  storage_efficiency = volume / surface_area
-  return storage_efficiency
+  #for each can in the parallel list, values are unpacked
+  for i in range(len(can_names)):
+    name = can_names[i]
+    radious = can_radiouses[i]
+    height = can_heights[i]
+    cost = can_costs[i]
+
+    # Call the compute_storage_efficiency and
+    # compute_cost_efficiency functions.
+    store_eff = compute_storage_efficiency(radius, height)
+    cost_eff  = compute_cost_efficiency(radius, height, cost)
+
+    # Print the can size name, storage
+    # efficiency, and cost efficiency.
+    print(f"{name} {store_eff:.2f} {cost_eff:.0f}")
+
+    # If the storage efficiency of the current can size is
+    # greater than the maximum storage efficiency, save then
+        # the current can size name and its storage efficiency.
+    if store_eff > max_store_eff:
+            best_store = name
+            max_store_eff = store_eff
+
+    # If the cost efficiency of the current can size is
+    # greater than the maximum cost efficiency, then save
+    # the current can size name and its cost efficiency.
+    if cost_eff > max_cost_eff:
+        best_cost = name
+        max_cost_eff = cost_eff
+
+# Print the best storage and cost efficiencies.
+print()
+print("Best can size in storage efficiency:", best_store)
+print("Best can size in cost efficiency:", best_cost)
+
 
 main()
